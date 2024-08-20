@@ -12,34 +12,34 @@ if (POLICY CMP0141)
 endif()
 
 project ("SRAL")
-add_library(${CMAKE_PROJECT_NAME}_obj OBJECT 
+add_library(${PROJECT_NAME}_obj OBJECT 
   "Include/SRAL.h" "SRC/SRAL.cpp" "SRC/Engine.h" "SRC/Encoding.h" "SRC/Encoding.cpp"
   "SRC/NVDA.h" "SRC/NVDA.cpp" "SRC/SAPI.h" "SRC/SAPI.cpp"
   "Dep/blastspeak.h" "Dep/blastspeak.c" "Dep/fsapi.h" "Dep/fsapi.c"
   "SRC/Jaws.h" "SRC/Jaws.cpp" "SRC/SpeechDispatcher.h" "SRC/SpeechDispatcher.cpp" "SRC/UIA.cpp"
   "Dep/UIAProvider.h" "Dep/UIAProvider.cpp")
-set_property(TARGET ${CMAKE_PROJECT_NAME}_obj
+set_property(TARGET ${PROJECT_NAME}_obj
   PROPERTY PUBLIC_HEADER "Include/SRAL.h")
-set_property(TARGET ${CMAKE_PROJECT_NAME}_obj
+set_property(TARGET ${PROJECT_NAME}_obj
   PROPERTY POSITION_INDEPENDENT_CODE on)
 
-add_library(${CMAKE_PROJECT_NAME} SHARED
-  $<TARGET_OBJECTS:${CMAKE_PROJECT_NAME}_obj>)
-add_library(${CMAKE_PROJECT_NAME}_static STATIC
-  $<TARGET_OBJECTS:${CMAKE_PROJECT_NAME}_obj>)
+add_library(${PROJECT_NAME} SHARED
+  $<TARGET_OBJECTS:${PROJECT_NAME}_obj>)
+add_library(${PROJECT_NAME}_static STATIC
+  $<TARGET_OBJECTS:${PROJECT_NAME}_obj>)
 
-install(TARGETS ${CMAKE_PROJECT_NAME}_obj
-  PUBLIC_HEADER DESTINATION "include/${CMAKE_PROJECT_NAME}"
-  INCLUDES DESTINATION "include/${CMAKE_PROJECT_NAME}")
+install(TARGETS ${PROJECT_NAME}_obj
+  PUBLIC_HEADER DESTINATION "include/${PROJECT_NAME}"
+  INCLUDES DESTINATION "include/${PROJECT_NAME}")
 
-install(TARGETS ${CMAKE_PROJECT_NAME}
+install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION "bin"
   LIBRARY DESTINATION "lib"
   ARCHIVE DESTINATION "lib")
-install(TARGETS ${CMAKE_PROJECT_NAME}_static DESTINATION "lib")
+install(TARGETS ${PROJECT_NAME}_static DESTINATION "lib")
 
 if (WIN32)
-  target_link_libraries(${CMAKE_PROJECT_NAME} "uiautomationcore.lib" "winmm.lib")
+  target_link_libraries(${PROJECT_NAME} "uiautomationcore.lib" "winmm.lib")
 else()
   set_source_files_properties(
     "SRC/Encoding.h" "SRC/Encoding.cpp" "SRC/NVDA.h" "SRC/NVDA.cpp" "SRC/SAPI.h" "SRC/SAPI.cpp"
